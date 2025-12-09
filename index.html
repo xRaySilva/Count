@@ -3,8 +3,27 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Count</title>
+    <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1.0" />
+    <title>Counter</title>
+    <style>
+
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body{
+        height: 100%;
+      }
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #515151;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
@@ -25,14 +44,78 @@
     ></script>
 
     <script type="text/babel">
+
       const Number = ({value}) => {
-        return <span>{value}</span>;
+
+        const style = {
+          color:'white',
+          fontSize: '3rem'
+        }
+        
+        const styleNegative ={
+          color:'red',
+          fontSize: '3rem'
+        }
+
+        const stylePositive = {
+          color:'green',
+          fontSize: '3rem'
+        }
+        return <span style={value === 0 ?style : value > 0 ? stylePositive : styleNegative}>{value}</span>;
+
       };
-      const Box = ({ children }) => {
-        return <div>{children}</div>;
+
+      const Box = ({ children, value }) => {
+
+        const style = {
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column'
+        }
+
+        const style1 = {
+          display: 'flex',
+          alignItems: 'center',
+          gap:'5px'
+        }
+
+        return <div style={value === 'all' ? style: style1 }>{children}</div>;
+
       };
 
       const Button = ({text, update, value}) => {
+
+          const reset = {
+            width:'100px',
+            padding:'2px',
+            border:'none',
+            textTransform: 'uppercase',
+            
+          }
+
+          const decrement ={
+            width: '100px',
+            backgroundColor:'red',
+            color:'white',
+            padding:'2px',
+            border:'none',
+            textTransform: 'uppercase'
+
+
+          }
+
+          const increment ={
+            width: '100px',
+            backgroundColor:'green',
+            color:'white',
+            padding:'2px',
+            border:'none',
+            textTransform: 'uppercase'
+            
+
+          }
+
+
 
           const execute = () => {
 
@@ -51,7 +134,9 @@
 
           }
 
-        return <button onClick={execute} >{text}</button>;
+
+
+        return <button onClick={execute} style={text === 'Reset'? reset : text === 'Decrement' ? decrement : increment} >{text}</button>;
       };
 
       const App = () => {
@@ -60,29 +145,35 @@
 
         return (
           <>
-            <Number value={value} />
 
-            <Box>
+            <Box value='all'>
 
-              <Button 
-                text='Decrement' 
-                update={setValue} 
-                value={value}
-                />
+              <Number value={value} />
 
-              <Button 
-                text='Reset' 
-                update={setValue}  
-                value={value} 
-                />
+              <Box>
 
-              <Button 
-                text='Increase' 
-                update={setValue} 
-                value={value}
-                />
+                <Button 
+                  text='Decrement' 
+                  update={setValue} 
+                  value={value}
+                  />
+
+                <Button 
+                  text='Reset' 
+                  update={setValue}  
+                  value={value} 
+                  />
+
+                <Button 
+                  text='Increase' 
+                  update={setValue} 
+                  value={value}
+                  />
+
+              </Box>
 
             </Box>
+
 
           </>
         );
